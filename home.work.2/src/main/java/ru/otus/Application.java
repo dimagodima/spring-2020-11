@@ -6,9 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import ru.otus.config.CsvConfig;
-import ru.otus.domain.Student;
 import ru.otus.domain.Quiz;
-import ru.otus.service.ICsvService;
+import ru.otus.domain.Student;
+import ru.otus.service.CsvService;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,16 +17,12 @@ import java.util.List;
 @Configuration
 public class Application {
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(Application.class);
+
         List<Quiz> quizList = null;
-        ICsvService csvService = context.getBean(ICsvService.class);
+        CsvService csvService = context.getBean(CsvService.class);
         CsvConfig csvConfig = context.getBean(CsvConfig.class);
 
         Student student = csvService.askFirstAndLastNames();
@@ -36,16 +32,13 @@ public class Application {
             e.printStackTrace();
         }
 
-        int countCorrectAnswers = csvService.printQuestionsAndAnswers(quizList, student);
+        int countCorrectAnswers = csvService.printQuestionsAndAnswers(quizList);
 
         csvService.passTestOrNot(countCorrectAnswers, csvConfig.getPassScore(), student);
-
-
     }
 
-
-
-
-
-
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 }
