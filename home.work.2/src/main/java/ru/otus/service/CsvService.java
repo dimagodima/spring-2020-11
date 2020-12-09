@@ -12,5 +12,5 @@ public interface CsvService {
     int printQuestionsAndAnswers(List<Quiz> list);
     Student askFirstAndLastNames();
     void passTestOrNot(int countCorrectPersonAnswers,int countCorrectPersonForPassTest, Student student);
-
+    String scannerResult();
 }

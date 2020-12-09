@@ -44,12 +44,9 @@ public class CsvServiceImpl implements CsvService {
 
     @Override
     public Student askFirstAndLastNames() {
-
-        Student student = new Student();
         System.out.println("What is your first Name?");
-        student.setFirstName(scannerResult());
         System.out.println("What is your last Name?");
-        student.setLastName(scannerResult());
+        Student student = new Student(scannerResult(),scannerResult());
 
         return student;
     }
@@ -65,6 +62,7 @@ public class CsvServiceImpl implements CsvService {
         }
     }
 
+    @Override
     public String scannerResult(){
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
