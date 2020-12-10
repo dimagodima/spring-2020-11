@@ -1,4 +1,4 @@
-package ru.otus.homework1.domain;
+package ru.otus.domain;
 
 public class Quiz {
 
@@ -28,4 +28,5 @@ public class Quiz {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
 }
