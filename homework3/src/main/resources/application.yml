@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+csv:
+  rupath: "ru_RU_quiz.csv"
+  enpath: "en_quiz.csv"
+  score: 3
+
+application:
+  locale: ru_RU
