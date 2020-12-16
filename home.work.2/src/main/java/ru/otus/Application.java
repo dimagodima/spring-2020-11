@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import ru.otus.service.QuizService;
+import ru.otus.service.impl.QuizServiceImpl;
 
 @ComponentScan
 @Configuration
@@ -14,7 +14,7 @@ public class Application {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(Application.class);
-        QuizService bean = context.getBean(QuizService.class);
+        QuizServiceImpl bean = context.getBean(QuizServiceImpl.class);
         bean.startExam();
     }
 
