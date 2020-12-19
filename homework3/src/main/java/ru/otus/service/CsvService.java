@@ -9,4 +9,8 @@ import java.util.List;
 public interface CsvService {
 
     List<Quiz> readFile(String path) throws IOException;
+    int printQuestionsAndAnswers(List<Quiz> list);
+    Student askFirstAndLastNames();
+    void passTestOrNot(int countCorrectPersonAnswers,int countCorrectPersonForPassTest, Student student);
+    String scannerResult();
 }
