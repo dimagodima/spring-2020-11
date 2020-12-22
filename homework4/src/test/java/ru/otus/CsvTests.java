@@ -29,10 +29,7 @@ class CsvTests {
     @Test
     public void printQuestionsAndAnswersTest() throws IOException {
         List<Quiz> list = new ArrayList<>();
-        Quiz quiz = new Quiz();
-        quiz.setQuestion("Which framework are we learning?");
-        quiz.setAnswer("Spring");
-        list.add(quiz);
+        list.add(new Quiz("Which framework are we learning?","Spring"));
         String answer = IOUtils.toString(new ByteArrayInputStream("Spring".getBytes()), StandardCharsets.UTF_8);
         int correctAnswerCount = 0;
         for (Quiz quizz : list) {
@@ -45,11 +42,6 @@ class CsvTests {
             }
         }
         assertEquals(correctAnswerCount, 1);
-    }
-
-    @Test
-    public void askFirstAndLastNamesTest(){
-
     }
 
 }

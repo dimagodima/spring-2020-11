@@ -8,5 +8,4 @@ import java.util.List;
 public interface QuestionService {
     int printQuestionsAndAnswers(List<Quiz> list);
     Student askFirstAndLastNames();
-    String scannerResult();
 }
