@@ -1,0 +1,1 @@
+insert into authors (author_name) values (:author_name);

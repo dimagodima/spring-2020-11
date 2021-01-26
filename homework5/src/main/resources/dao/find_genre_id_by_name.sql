@@ -1,0 +1,1 @@
+select genre_id from genres where genre_name = :genre_name

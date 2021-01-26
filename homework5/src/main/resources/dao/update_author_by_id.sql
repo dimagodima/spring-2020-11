@@ -1,0 +1,1 @@
+update authors set author_name = :author_name where author_id = :author_id
