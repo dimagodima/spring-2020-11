@@ -1,1 +1,0 @@
-update genres set genre_name = :genre_name where genre_id = :genre_id

@@ -1,1 +1,0 @@
-select author_id from authors where author_name = :author_name

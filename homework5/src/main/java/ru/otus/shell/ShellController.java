@@ -1,18 +1,26 @@
 package ru.otus.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.dao.LibraryDao;
+import ru.otus.dao.AuthorDao;
+import ru.otus.dao.BookDao;
+import ru.otus.dao.GenreDao;
 import ru.otus.domain.Book;
 
 @ShellComponent
 public class ShellController {
 
-    private final LibraryDao libraryDao;
+    private final BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
 
-    public ShellController(LibraryDao libraryDao) {
-        this.libraryDao = libraryDao;
+    @Autowired
+    public ShellController(BookDao bookDao, AuthorDao authorDao, GenreDao genreDao) {
+        this.bookDao = bookDao;
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
     }
 
     @ShellMethod(value = "Welcome to library.", key = {"start"})
@@ -23,7 +31,7 @@ public class ShellController {
     @ShellMethod(value = "Add book", key = {"add_book"})
     public String addBookCommand(@ShellOption() Book book){
 
-        libraryDao.addBook(book);
+        bookDao.addBook(book);
 
         return "Book added to library.";
     }
@@ -31,7 +39,7 @@ public class ShellController {
     @ShellMethod(value = "Add author", key = {"add_author"})
     public String addAuthorCommand(@ShellOption() String author){
 
-        libraryDao.addAuthor(author);
+        authorDao.addAuthor(author);
 
         return "Author added to library.";
     }
@@ -39,7 +47,7 @@ public class ShellController {
     @ShellMethod(value = "Add genre", key = {"add_genre"})
     public String addGenreCommand(@ShellOption() String genre){
 
-        libraryDao.addGenre(genre);
+        genreDao.addGenre(genre);
 
         return "Genre added to library.";
     }
@@ -49,30 +57,26 @@ public class ShellController {
                                         @ShellOption() String name,
                                         @ShellOption() Long authorId,
                                         @ShellOption() Long genreId){
-        libraryDao.updateBookById(id,name,authorId,genreId);
+        bookDao.updateBookById(id,name,authorId,genreId);
         return "Book with id " + id + " successful updated.";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete_book"})
     public String deleteBookByIdCommand(@ShellOption() Long id){
-        libraryDao.deleteBookById(id);
+        bookDao.deleteBookById(id);
         return "Book with id " + id + " successful deleted.";
     }
 
     @ShellMethod(value = "Get book by name", key = {"get_book_by_name"})
     public String getBookByNameCommand(@ShellOption() String bookName){
-        Book book = libraryDao.getBookByName(bookName);
-        book.setAuthor(libraryDao.findAuthorById(book.getAuthorId()));
-        book.setGenre(libraryDao.findGenreById(book.getGenreId()));
+        Book book = bookDao.getBookByName(bookName);
 
         return book.toString();
     }
 
     @ShellMethod(value = "Get book by id", key = {"get_book_by_id"})
     public String getBookByIdCommand(@ShellOption() Long bookId){
-        Book book = libraryDao.getBookById(bookId);
-        book.setAuthor(libraryDao.findAuthorById(book.getAuthorId()));
-        book.setGenre(libraryDao.findGenreById(book.getGenreId()));
+        Book book = bookDao.getBookById(bookId);
 
         return book.toString();
     }
