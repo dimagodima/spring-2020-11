@@ -73,6 +73,8 @@ public class Book {
                 ", genre='" + genre + '\'' +
                 ", author='" + author + '\'' +
                 ", name='" + name + '\'' +
+                ", genreId=" + genreId +
+                ", authorId=" + authorId +
                 '}';
     }
 }

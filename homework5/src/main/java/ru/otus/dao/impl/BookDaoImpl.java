@@ -19,9 +19,11 @@ public class BookDaoImpl implements BookDao {
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
 
-    private static final String GET_BOOK_BY_ID = "select books.id, books.genre_id, authors.author_name, genres.genre_name, books.name" +
-            " from books join authors on books.author_id = authors.author_id join genres on books.genre_id = genres.genre_id where id = :id;";
-    private static final String GET_BOOK_BY_NAME = "select books.id, authors.author_name, genres.genre_name, books.name from books " +
+    private static final String GET_BOOK_BY_ID = "select books.id, books.genre_id, authors.author_name, genres.genre_name, books.name," +
+            "books.genre_id, books.author_id from books join authors on books.author_id = authors.author_id join genres" +
+            " on books.genre_id = genres.genre_id where id = :id;";
+    private static final String GET_BOOK_BY_NAME = "select books.id, authors.author_name, genres.genre_name, books.name," +
+            "books.genre_id, books.author_id from books " +
             "join authors on books.author_id = authors.author_id join genres on books.genre_id = genres.genre_id where name = :name limit 10;";
     private static final String ADD_BOOK = "insert into books (name, genre_id, author_id) values (:name, :genre_id, :author_id);";
     private static final String DELETE_BOOK_BY_ID = "delete from books where id = :id;";
@@ -86,6 +88,8 @@ public class BookDaoImpl implements BookDao {
                 book.setName(rs.getString("name"));
                 book.setAuthor(rs.getString("author_name"));
                 book.setGenre(rs.getString("genre_name"));
+                book.setGenreId(rs.getLong("genre_id"));
+                book.setAuthorId(rs.getLong("author_id"));
 
                 return book;
             }
