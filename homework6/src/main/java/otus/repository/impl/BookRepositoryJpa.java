@@ -64,7 +64,6 @@ public class BookRepositoryJpa implements BookRepository {
         query.executeUpdate();
     }
 
-
     @Override
     @Transactional
     public List<Book> findAllBooks() {
