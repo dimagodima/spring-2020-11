@@ -60,7 +60,7 @@ public class ShellController {
         return "Genre added to library.";
     }
 
-    @ShellMethod(value = "Add comment", key = {"save_genre"})
+    @ShellMethod(value = "Add comment", key = {"save_comment"})
     public String addGenreCommand(@ShellOption()Comment comment){
 
         commentRepository.saveComment(comment);
