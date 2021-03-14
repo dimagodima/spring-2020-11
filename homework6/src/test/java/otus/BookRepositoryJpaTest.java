@@ -57,7 +57,7 @@ public class BookRepositoryJpaTest {
     void shouldSaveBook(){
         repository.saveBook(new Book(BOOK_ID_SECOND,BOOK_NAME_SECOND,new Genre(0L,BOOK_GENRE),
                 new Author(0L,BOOK_AUTHOR),
-                new Comment(0L,BOOK_COMMENT)));
+                List.of(new Comment(0L,BOOK_COMMENT))));
         Book book = em.find(Book.class, BOOK_ID_SECOND);
         assertThat(book.getName()).isEqualTo(BOOK_NAME_SECOND);
     }
@@ -65,7 +65,7 @@ public class BookRepositoryJpaTest {
     @Test
     void shouldUpdateBookNameById(){
         Book bookForUpdate = em.find(Book.class, BOOK_ID_FIRST);
-        repository.updateBookNameById(new Book(BOOK_ID_FIRST,BOOK_NAME_SECOND, bookForUpdate.getGenre(), bookForUpdate.getAuthor(),bookForUpdate.getComment()));
+        repository.updateBookNameById(new Book(BOOK_ID_FIRST,BOOK_NAME_SECOND, bookForUpdate.getGenre(), bookForUpdate.getAuthor(),bookForUpdate.getComments()));
         Book bookForCheck = em.find(Book.class, BOOK_ID_FIRST);
         assertThat(bookForCheck.getName()).isEqualTo(BOOK_NAME_SECOND);
     }

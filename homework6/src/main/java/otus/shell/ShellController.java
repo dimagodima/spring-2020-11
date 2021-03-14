@@ -72,7 +72,7 @@ public class ShellController {
     public String updateBookNameByIdCommand(@ShellOption() Long id,
                                             @ShellOption() String name){
         Optional<Book> bookById = bookRepository.findBookById(id);
-        bookRepository.updateBookNameById(new Book(id,name,bookById.get().getGenre(), bookById.get().getAuthor(), bookById.get().getComment()));
+        bookRepository.updateBookNameById(new Book(id,name,bookById.get().getGenre(), bookById.get().getAuthor(), bookById.get().getComments()));
         return "Book with id " + id + " successful updated.";
     }
 
@@ -96,5 +96,10 @@ public class ShellController {
         return books.toString();
     }
 
+    @ShellMethod(value = "Get all comments for book by book id", key = {"find_all_comments_for_book"})
+    public String getAllCommentForBook(@ShellOption() Long bookId){
+        Optional<Book> books = bookRepository.findBookById(bookId);
 
+        return books.get().getComments().toString();
+    }
 }

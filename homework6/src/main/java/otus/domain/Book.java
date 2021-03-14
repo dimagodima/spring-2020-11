@@ -1,6 +1,7 @@
 package otus.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -10,8 +11,8 @@ import javax.persistence.*;
                 attributeNodes = @NamedAttributeNode(value = "genre", subgraph = "genre-subgraph")),
         @NamedSubgraph(name = "author-subgraph",
                 attributeNodes = @NamedAttributeNode(value = "author", subgraph = "author-subgraph")),
-        @NamedSubgraph(name = "comment-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "comment", subgraph = "comment-subgraph"))
+        @NamedSubgraph(name = "comments-subgraph",
+                attributeNodes = @NamedAttributeNode(value = "comments", subgraph = "comments-subgraph"))
             })
 
 public class Book {
@@ -31,19 +32,19 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
-    private Comment comment;
+    private List<Comment> comments;
 
     public Book() {
     }
 
-    public Book(Long id, String name, Genre genre, Author author, Comment comment) {
+    public Book(Long id, String name, Genre genre, Author author, List<Comment> comments) {
         this.id = id;
         this.name = name;
         this.genre = genre;
         this.author = author;
-        this.comment = comment;
+        this.comments = comments;
     }
 
     public Long getId() {
@@ -78,12 +79,12 @@ public class Book {
         this.author = author;
     }
 
-    public Comment getComment() {
-        return comment;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
@@ -93,7 +94,7 @@ public class Book {
                 ", name='" + name + '\'' +
                 ", genre=" + genre +
                 ", author=" + author +
-                ", comment=" + comment +
+                ", comments=" + comments +
                 '}';
     }
 }
