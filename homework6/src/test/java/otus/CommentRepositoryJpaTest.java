@@ -31,35 +31,35 @@ public class CommentRepositoryJpaTest {
 
     @Test
     void shouldFindCommentById(){
-        Optional<Comment> comment = repository.findCommentById(COMMENT_ID_FIRST);
-        assertThat(comment).isPresent().get().hasFieldOrPropertyWithValue("comment", COMMENT_FIRST);
+        Optional<Comment> Comment = repository.findCommentById(COMMENT_ID_FIRST);
+        assertThat(Comment).isPresent().get().hasFieldOrPropertyWithValue("comment", COMMENT_FIRST);
     }
 
     @Test
     void shouldFindCommentByName(){
-        List<Comment> comment = repository.findCommentByName(COMMENT_FIRST);
-        assertThat(comment.get(0).getId()).isEqualTo(COMMENT_ID_FIRST);
+        List<Comment> Comment = repository.findCommentByName(COMMENT_FIRST);
+        assertThat(Comment.get(0).getId()).isEqualTo(COMMENT_ID_FIRST);
     }
 
     @Test
     void shouldUpdateCommentById(){
         repository.updateCommentById(new Comment(COMMENT_ID_FIRST,COMMENT_THIRD));
-        Comment comment = em.find(Comment.class, COMMENT_ID_FIRST);
-        assertThat(comment.getComment()).isEqualTo(COMMENT_THIRD);
+        Comment Comment = em.find(Comment.class, COMMENT_ID_FIRST);
+        assertThat(Comment.getComment()).isEqualTo(COMMENT_THIRD);
     }
 
     @Test
     void shouldDeleteCommentById(){
         repository.deleteCommentById(COMMENT_ID_SECOND);
-        Comment comment = em.find(Comment.class, COMMENT_ID_SECOND);
-        assertThat(comment).isNull();
+        Comment Comment = em.find(Comment.class, COMMENT_ID_SECOND);
+        assertThat(Comment).isNull();
     }
 
     @Test
     void shouldSaveCommentById(){
         repository.saveComment(new Comment(COMMENT_ID_THIRD,COMMENT_SECOND));
-        Comment comment = em.find(Comment.class, COMMENT_ID_THIRD);
-        assertThat(comment.getComment()).isEqualTo(COMMENT_SECOND);
+        Comment Comment = em.find(Comment.class, COMMENT_ID_THIRD);
+        assertThat(Comment.getComment()).isEqualTo(COMMENT_SECOND);
     }
     
 }

@@ -16,13 +16,11 @@ public class BookRepositoryJpa implements BookRepository {
     private EntityManager em;
 
     @Override
-    @Transactional
     public Optional<Book> findBookById(Long id) {
         return Optional.ofNullable(em.find(Book.class, id));
     }
 
     @Override
-    @Transactional
     public List<Book> findBookByName(String name) {
         TypedQuery<Book> query = em.createQuery("select b " +
                         "from Book b " +
@@ -45,23 +43,18 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     @Transactional
-    public void deleteBookById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from Book b " +
-                "where b.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteBookById(Book book) {
+        if(em.contains(book)){
+            em.remove(book);
+        }else{
+            em.remove(em.merge(book));
+        }
     }
 
     @Override
     @Transactional
-    public void updateBookNameById(Long id, String name) {
-        Query query = em.createQuery("update Book b " +
-                "set b.name = :name " +
-                "where b.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("name", name);
-        query.executeUpdate();
+    public void updateBookNameById(Book book) {
+        em.merge(book);
     }
 
     @Override

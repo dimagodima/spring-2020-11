@@ -71,13 +71,14 @@ public class ShellController {
     @ShellMethod(value = "Update book name by id", key = {"update_book"})
     public String updateBookNameByIdCommand(@ShellOption() Long id,
                                             @ShellOption() String name){
-        bookRepository.updateBookNameById(id,name);
+        Optional<Book> bookById = bookRepository.findBookById(id);
+        bookRepository.updateBookNameById(new Book(id,name,bookById.get().getGenre(), bookById.get().getAuthor(), bookById.get().getComment()));
         return "Book with id " + id + " successful updated.";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete_book"})
     public String deleteBookByIdCommand(@ShellOption() Long id){
-        bookRepository.deleteBookById(id);
+        bookRepository.deleteBookById(new Book(id,null,null,null,null));
         return "Book with id " + id + " successful deleted.";
     }
 

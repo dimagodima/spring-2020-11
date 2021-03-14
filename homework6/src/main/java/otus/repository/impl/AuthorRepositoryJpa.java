@@ -19,13 +19,11 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     private EntityManager em;
 
     @Override
-    @Transactional
     public Optional<Author> findAuthorById(Long id) {
         return Optional.ofNullable(em.find(Author.class, id));
     }
 
     @Override
-    @Transactional
     public List<Author> findAuthorByName(String name) {
         TypedQuery<Author> query = em.createQuery("select a " +
                         "from Author a " +
@@ -38,12 +36,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     @Override
     @Transactional
     public void updateAuthorById(Author author) {
-        Query query = em.createQuery("update Author a " +
-                "set a.authorName = :name " +
-                "where a.authorId = :id");
-        query.setParameter("name", author.getAuthorName());
-        query.setParameter("id", author.getAuthorId());
-        query.executeUpdate();
+        em.merge(author);
     }
 
     @Override
@@ -59,11 +52,11 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     @Transactional
-    public void deleteAuthorById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from Author a " +
-                "where a.authorId = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteAuthorById(Author author) {
+        if(em.contains(author)){
+            em.remove(author);
+        }else{
+            em.remove(em.merge(author));
+        }
     }
 }

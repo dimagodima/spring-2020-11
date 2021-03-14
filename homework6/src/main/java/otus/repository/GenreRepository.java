@@ -10,5 +10,5 @@ public interface GenreRepository {
     void updateGenreById(Genre genre);
     Optional<Genre> findGenreById(Long id);
     List<Genre> findGenreByName(String name);
-    void deleteGenreById(Long id);
+    void deleteGenreById(Genre genre);
 }

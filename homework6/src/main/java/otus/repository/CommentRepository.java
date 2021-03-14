@@ -10,5 +10,5 @@ public interface CommentRepository {
     List<Comment> findCommentByName(String name);
     void updateCommentById(Comment comment);
     Comment saveComment(Comment comment);
-    void deleteCommentById(Long id);
+    void deleteCommentById(Comment comment);
 }

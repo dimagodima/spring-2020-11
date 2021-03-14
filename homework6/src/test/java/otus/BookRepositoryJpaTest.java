@@ -64,14 +64,15 @@ public class BookRepositoryJpaTest {
 
     @Test
     void shouldUpdateBookNameById(){
-        repository.updateBookNameById(BOOK_ID_FIRST,BOOK_NAME_SECOND);
-        Book book = em.find(Book.class, BOOK_ID_FIRST);
-        assertThat(book.getName()).isEqualTo(BOOK_NAME_SECOND);
+        Book bookForUpdate = em.find(Book.class, BOOK_ID_FIRST);
+        repository.updateBookNameById(new Book(BOOK_ID_FIRST,BOOK_NAME_SECOND, bookForUpdate.getGenre(), bookForUpdate.getAuthor(),bookForUpdate.getComment()));
+        Book bookForCheck = em.find(Book.class, BOOK_ID_FIRST);
+        assertThat(bookForCheck.getName()).isEqualTo(BOOK_NAME_SECOND);
     }
     @Test
     void shouldDeleteBookById(){
-        repository.deleteBookById(BOOK_ID_SECOND);
-        Book book = em.find(Book.class, BOOK_ID_SECOND);
+        repository.deleteBookById(new Book(BOOK_ID_FIRST, BOOK_NAME_FIRST,null,null,null));
+        Book book = em.find(Book.class, BOOK_ID_FIRST);
         assertThat(book).isNull();
     }
 }

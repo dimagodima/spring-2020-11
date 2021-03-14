@@ -57,8 +57,8 @@ public class GenreRepositoryJpaTest {
 
     @Test
     void shouldDeleteGenreById(){
-        repository.deleteGenreById(GENRE_ID_SECOND);
-        Genre genre = em.find(Genre.class, GENRE_ID_SECOND);
+        repository.deleteGenreById(new Genre(GENRE_ID_THIRD,GENRE_NAME_THIRD));
+        Genre genre = em.find(Genre.class, GENRE_ID_THIRD);
         assertThat(genre).isNull();
     }
 
