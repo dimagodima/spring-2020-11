@@ -56,7 +56,7 @@ public class BookRepositoryTest {
     void shouldSaveBook(){
         repository.save(new Book(BOOK_ID_SECOND,BOOK_NAME_SECOND,new Genre(0L,BOOK_GENRE),
                 new Author(0L,BOOK_AUTHOR),
-                new Comment(0L,BOOK_COMMENT)));
+                List.of(new Comment(0L,BOOK_COMMENT))));
         Book book = em.find(Book.class, BOOK_ID_SECOND);
         assertThat(book.getName()).isEqualTo(BOOK_NAME_SECOND);
     }

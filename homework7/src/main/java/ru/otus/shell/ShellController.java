@@ -95,5 +95,13 @@ public class ShellController {
         return books.toString();
     }
 
+    @ShellMethod(value = "Get book by id", key = {"find_book_by_id"})
+    public String getBookByIdCommand(@ShellOption() Long bookId){
+        Optional<Book> books = bookRepository.findById(bookId);
+
+        return books.toString();
+    }
+
+
 
 }
