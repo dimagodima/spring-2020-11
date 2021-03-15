@@ -65,7 +65,7 @@ public class BookRepositoryJpaTest {
     @Test
     void shouldUpdateBookNameById(){
         Book bookForUpdate = em.find(Book.class, BOOK_ID_FIRST);
-        repository.updateBookNameById(new Book(BOOK_ID_FIRST,BOOK_NAME_SECOND, bookForUpdate.getGenre(), bookForUpdate.getAuthor(),bookForUpdate.getComments()));
+        repository.updateBook(new Book(BOOK_ID_FIRST,BOOK_NAME_SECOND, bookForUpdate.getGenre(), bookForUpdate.getAuthor(),bookForUpdate.getComments()));
         Book bookForCheck = em.find(Book.class, BOOK_ID_FIRST);
         assertThat(bookForCheck.getName()).isEqualTo(BOOK_NAME_SECOND);
     }

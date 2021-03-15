@@ -3,6 +3,7 @@ package otus.shell;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import otus.domain.Author;
 import otus.domain.Book;
 import otus.domain.Comment;
@@ -68,11 +69,13 @@ public class ShellController {
         return "Comment added for book.";
     }
 
+    @Transactional
     @ShellMethod(value = "Update book name by id", key = {"update_book"})
     public String updateBookNameByIdCommand(@ShellOption() Long id,
                                             @ShellOption() String name){
         Optional<Book> bookById = bookRepository.findBookById(id);
-        bookRepository.updateBookNameById(new Book(id,name,bookById.get().getGenre(), bookById.get().getAuthor(), bookById.get().getComments()));
+        bookById.get().setName(name);
+        bookRepository.updateBook(bookById.get());
         return "Book with id " + id + " successful updated.";
     }
 
@@ -97,9 +100,23 @@ public class ShellController {
     }
 
     @ShellMethod(value = "Get all comments for book by book id", key = {"find_all_comments_for_book"})
-    public String getAllCommentForBook(@ShellOption() Long bookId){
+    public void getAllCommentForBook(@ShellOption() Long bookId){
         Optional<Book> books = bookRepository.findBookById(bookId);
 
-        return books.get().getComments().toString();
+        books.stream().forEach(System.out::println);
+    }
+
+    @ShellMethod(value = "Delete comment by id", key = {"del_com"})
+    public String deleteCommentById(@ShellOption() Long id){
+        commentRepository.deleteCommentById(new Comment(id,null));
+
+        return "comment deleted";
+    }
+
+    @ShellMethod(value = "Delete comment by id", key = {"find_all_books"})
+    public void findAllBooks(){
+        List<Book> allBooks = bookRepository.findAllBooks();
+
+        allBooks.forEach(System.out::println);
     }
 }

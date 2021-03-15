@@ -1,7 +1,10 @@
 package otus.domain;
 
+import org.hibernate.annotations.BatchSize;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -10,9 +13,7 @@ import java.util.List;
         @NamedSubgraph(name = "genre-subgraph",
                 attributeNodes = @NamedAttributeNode(value = "genre", subgraph = "genre-subgraph")),
         @NamedSubgraph(name = "author-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "author", subgraph = "author-subgraph")),
-        @NamedSubgraph(name = "comments-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "comments", subgraph = "comments-subgraph"))
+                attributeNodes = @NamedAttributeNode(value = "author", subgraph = "author-subgraph"))
             })
 
 public class Book {
@@ -33,6 +34,7 @@ public class Book {
     private Author author;
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @BatchSize(size = 10)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 

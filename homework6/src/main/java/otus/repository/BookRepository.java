@@ -10,6 +10,6 @@ public interface BookRepository {
     List<Book> findBookByName(String name);
     Book saveBook(Book book);
     void deleteBookById(Book book);
-    void updateBookNameById(Book book);
+    void updateBook(Book book);
     List<Book> findAllBooks();
 }

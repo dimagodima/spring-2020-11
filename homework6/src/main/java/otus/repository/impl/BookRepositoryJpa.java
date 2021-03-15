@@ -1,5 +1,6 @@
 package otus.repository.impl;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import otus.domain.Book;
@@ -16,18 +17,20 @@ public class BookRepositoryJpa implements BookRepository {
     private EntityManager em;
 
     @Override
+    @Transactional
     public Optional<Book> findBookById(Long id) {
-        return Optional.ofNullable(em.find(Book.class, id));
-    }
+        Optional<Book> book = Optional.ofNullable(em.find(Book.class, id));
+        book.ifPresent(value -> Hibernate.initialize(value.getComments()));
+        return book;    }
 
     @Override
     public List<Book> findBookByName(String name) {
-        TypedQuery<Book> query = em.createQuery("select b " +
-                        "from Book b " +
-                        "where b.name = :name",
-                Book.class);
+        EntityGraph<?> entityGraph = em.getEntityGraph("books-entity-graph");
+        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre join fetch b.comments where b.name = :name", Book.class);
         query.setParameter("name", name);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
+
     }
 
     @Override
@@ -53,7 +56,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     @Transactional
-    public void updateBookNameById(Book book) {
+    public void updateBook(Book book) {
         em.merge(book);
     }
 
@@ -61,7 +64,7 @@ public class BookRepositoryJpa implements BookRepository {
     @Transactional
     public List<Book> findAllBooks() {
         EntityGraph<?> entityGraph = em.getEntityGraph("books-entity-graph");
-        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre join fetch b.comments", Book.class);
         query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
     }
