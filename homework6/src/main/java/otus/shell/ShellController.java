@@ -3,6 +3,7 @@ package otus.shell;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import otus.domain.Author;
 import otus.domain.Book;
 import otus.domain.Comment;
@@ -60,7 +61,7 @@ public class ShellController {
         return "Genre added to library.";
     }
 
-    @ShellMethod(value = "Add comment", key = {"save_genre"})
+    @ShellMethod(value = "Add comment", key = {"save_comment"})
     public String addGenreCommand(@ShellOption()Comment comment){
 
         commentRepository.saveComment(comment);
@@ -68,16 +69,19 @@ public class ShellController {
         return "Comment added for book.";
     }
 
+    @Transactional
     @ShellMethod(value = "Update book name by id", key = {"update_book"})
     public String updateBookNameByIdCommand(@ShellOption() Long id,
                                             @ShellOption() String name){
-        bookRepository.updateBookNameById(id,name);
+        Optional<Book> bookById = bookRepository.findBookById(id);
+        bookById.get().setName(name);
+        bookRepository.updateBook(bookById.get());
         return "Book with id " + id + " successful updated.";
     }
 
     @ShellMethod(value = "Delete book by id", key = {"delete_book"})
     public String deleteBookByIdCommand(@ShellOption() Long id){
-        bookRepository.deleteBookById(id);
+        bookRepository.deleteBookById(new Book(id,null,null,null,null));
         return "Book with id " + id + " successful deleted.";
     }
 
@@ -95,5 +99,24 @@ public class ShellController {
         return books.toString();
     }
 
+    @ShellMethod(value = "Get all comments for book by book id", key = {"find_all_comments_for_book"})
+    public void getAllCommentForBook(@ShellOption() Long bookId){
+        Optional<Book> books = bookRepository.findBookById(bookId);
 
+        books.stream().forEach(System.out::println);
+    }
+
+    @ShellMethod(value = "Delete comment by id", key = {"del_com"})
+    public String deleteCommentById(@ShellOption() Long id){
+        commentRepository.deleteCommentById(new Comment(id,null));
+
+        return "comment deleted";
+    }
+
+    @ShellMethod(value = "Delete comment by id", key = {"find_all_books"})
+    public void findAllBooks(){
+        List<Book> allBooks = bookRepository.findAllBooks();
+
+        allBooks.forEach(System.out::println);
+    }
 }

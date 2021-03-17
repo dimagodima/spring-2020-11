@@ -32,22 +32,15 @@ public class GenreRepositoryJpa implements GenreRepository {
     @Override
     @Transactional
     public void updateGenreById(Genre genre) {
-        Query query = em.createQuery("update Genre g " +
-                "set g.genreName = :name " +
-                "where g.genreId = :id");
-        query.setParameter("name", genre.getGenreName());
-        query.setParameter("id", genre.getGenreName());
-        query.executeUpdate();
+        em.merge(genre);
     }
 
     @Override
-    @Transactional
     public Optional<Genre> findGenreById(Long id) {
         return Optional.ofNullable(em.find(Genre.class, id));
     }
 
     @Override
-    @Transactional
     public List<Genre> findGenreByName(String name) {
         TypedQuery<Genre> query = em.createQuery("select g " +
                         "from Genre g " +
@@ -59,11 +52,11 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     @Transactional
-    public void deleteGenreById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from Genre a " +
-                "where a.genreId = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteGenreById(Genre genre) {
+        if(em.contains(genre)){
+            em.remove(genre);
+        }else{
+            em.remove(em.merge(genre));
+        }
     }
 }

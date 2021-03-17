@@ -32,36 +32,37 @@ public class AuthorRepositoryJpaTest {
     private TestEntityManager em;
 
     @Test
-    void shouldFindAuthorById(){
+    void shouldFindAuthorById() {
         Optional<Author> author = repository.findAuthorById(AUTHOR_ID_FIRST);
         assertThat(author).isPresent().get().hasFieldOrPropertyWithValue("authorName", AUTHOR_NAME_FIRST);
     }
 
     @Test
-    void shouldFindAuthorByName(){
+    void shouldFindAuthorByName() {
         List<Author> author = repository.findAuthorByName(AUTHOR_NAME_FIRST);
         assertThat(author.get(0).getAuthorId()).isEqualTo(AUTHOR_ID_FIRST);
     }
 
     @Test
-    void shouldUpdateAuthorById(){
-        repository.updateAuthorById(new Author(AUTHOR_ID_FIRST,AUTHOR_NAME_SECOND));
+    void shouldUpdateAuthorById() {
+        repository.updateAuthorById(new Author(AUTHOR_ID_FIRST, AUTHOR_NAME_SECOND));
         Author author = em.find(Author.class, AUTHOR_ID_FIRST);
         assertThat(author.getAuthorName()).isEqualTo(AUTHOR_NAME_SECOND);
     }
 
     @Test
-    void shouldSaveAuthorById(){
-        repository.saveAuthor(new Author(AUTHOR_ID_THIRD,AUTHOR_NAME_THIRD));
+    void shouldSaveAuthorById() {
+        repository.saveAuthor(new Author(AUTHOR_ID_THIRD, AUTHOR_NAME_THIRD));
         Author author = em.find(Author.class, AUTHOR_ID_THIRD);
         assertThat(author.getAuthorName()).isEqualTo(AUTHOR_NAME_THIRD);
     }
 
     @Test
     void shouldDeleteAuthorById(){
-        repository.deleteAuthorById(AUTHOR_ID_SECOND);
-        Author author = em.find(Author.class, AUTHOR_ID_SECOND);
-        assertThat(author).isNull();
+        Author authorForDelete = new Author(AUTHOR_ID_THIRD,AUTHOR_NAME_THIRD);
+        repository.deleteAuthorById(authorForDelete);
+        Author authorForCheck = em.find(Author.class, AUTHOR_ID_THIRD);
+        assertThat(authorForCheck).isNull();
     }
 
 }

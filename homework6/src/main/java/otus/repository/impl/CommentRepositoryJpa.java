@@ -20,13 +20,11 @@ public class CommentRepositoryJpa implements CommentRepository {
 
 
     @Override
-    @Transactional
     public Optional<Comment> findCommentById(Long id) {
         return Optional.ofNullable(em.find(Comment.class, id));
     }
 
     @Override
-    @Transactional
     public List<Comment> findCommentByName(String name) {
         TypedQuery<Comment> query = em.createQuery("select c " +
                         "from Comment c " +
@@ -39,12 +37,7 @@ public class CommentRepositoryJpa implements CommentRepository {
     @Override
     @Transactional
     public void updateCommentById(Comment comment) {
-        Query query = em.createQuery("update Comment c " +
-                "set c.comment = :comment " +
-                "where c.id = :id");
-        query.setParameter("comment", comment.getComment());
-        query.setParameter("id", comment.getId());
-        query.executeUpdate();
+        em.merge(comment);
     }
 
     @Override
@@ -60,11 +53,11 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     @Override
     @Transactional
-    public void deleteCommentById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from Comment c " +
-                "where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void deleteCommentById(Comment comment) {
+        if(em.contains(comment)){
+            em.remove(comment);
+        }else{
+            em.remove(em.merge(comment));
+        }
     }
 }

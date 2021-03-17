@@ -10,5 +10,5 @@ public interface AuthorRepository {
     List<Author> findAuthorByName(String name);
     void updateAuthorById(Author author);
     Author saveAuthor(Author author);
-    void deleteAuthorById(Long id);
+    void deleteAuthorById(Author author);
 }
