@@ -12,11 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-    Optional<Author> findById(Long id);
     List<Author> findByName(String name);
-    Author save(Author author);
-    void deleteById(Long id);
-
     @Modifying
     @Query("update Author a set a.name = :name where a.id = :id")
     void updateAuthorById(@Param("name") String name, @Param("id") Long id);

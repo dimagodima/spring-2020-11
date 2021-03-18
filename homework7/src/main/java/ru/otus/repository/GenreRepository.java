@@ -13,11 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Long> {
-    Genre save(Genre genre);
-    Optional<Genre> findById(Long id);
     List<Genre> findByName(String name);
-    void deleteById(Long id);
-
     @Modifying
     @Query("update Genre g set g.name = :name where g.id = :id")
     void updateGenreById(@Param("name") String name, @Param("id") Long id);

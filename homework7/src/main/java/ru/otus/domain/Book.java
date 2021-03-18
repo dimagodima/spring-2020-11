@@ -1,19 +1,20 @@
 package ru.otus.domain;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "books")
 @NamedEntityGraph(name = "books-entity-graph",
-            subgraphs = {
-        @NamedSubgraph(name = "genre-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "genre", subgraph = "genre-subgraph")),
-        @NamedSubgraph(name = "author-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "author", subgraph = "author-subgraph")),
-        @NamedSubgraph(name = "comment-subgraph",
-                attributeNodes = @NamedAttributeNode(value = "comment", subgraph = "comment-subgraph"))
-            })
+        subgraphs = {
+                @NamedSubgraph(name = "genre-subgraph",
+                        attributeNodes = @NamedAttributeNode(value = "genre", subgraph = "genre-subgraph")),
+                @NamedSubgraph(name = "author-subgraph",
+                        attributeNodes = @NamedAttributeNode(value = "author", subgraph = "author-subgraph"))
+        })
 
 public class Book {
     @Id
