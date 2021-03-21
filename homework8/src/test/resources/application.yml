@@ -1,0 +1,4 @@
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.changelog
