@@ -13,7 +13,4 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
     List<Author> findByName(String name);
-    @Modifying
-    @Query("update Author a set a.name = :name where a.id = :id")
-    void updateAuthorById(@Param("name") String name, @Param("id") Long id);
 }

@@ -42,9 +42,11 @@ public class CommentRepositoryTest {
 
     @Test
     void shouldUpdateCommentById(){
-        repository.updateCommentById(COMMENT_THIRD,COMMENT_ID_FIRST);
         Comment comment = em.find(Comment.class, COMMENT_ID_FIRST);
-        assertThat(comment.getComment()).isEqualTo(COMMENT_THIRD);
+        comment.setComment(COMMENT_THIRD);
+        repository.save(comment);
+        Comment comment1 = em.find(Comment.class, COMMENT_ID_FIRST);
+        assertThat(comment1.getComment()).isEqualTo(COMMENT_THIRD);
     }
 
     @Test

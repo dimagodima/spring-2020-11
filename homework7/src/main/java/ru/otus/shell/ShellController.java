@@ -75,7 +75,7 @@ public class ShellController {
                                             @ShellOption() String name){
         Optional<Book> bookById = bookRepository.findById(id);
         bookById.get().setName(name);
-        bookRepository.updateBookNameById(id,name);
+        bookRepository.save(bookById.get());
         return "Book with id " + id + " successful updated.";
     }
 

@@ -41,9 +41,11 @@ public class GenreRepositoryTest {
 
     @Test
     void shouldUpdateGenreById(){
-        repository.updateGenreById(GENRE_NAME_THIRD, GENRE_ID_FIRST);
         Genre genre = em.find(Genre.class, GENRE_ID_FIRST);
-        assertThat(genre.getName()).isEqualTo(GENRE_NAME_THIRD);
+        genre.setName(GENRE_NAME_THIRD);
+        repository.save(genre);
+        Genre genre1 = em.find(Genre.class, GENRE_ID_FIRST);
+        assertThat(genre1.getName()).isEqualTo(GENRE_NAME_THIRD);
     }
 
     @Test

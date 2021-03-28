@@ -63,9 +63,11 @@ public class BookRepositoryTest {
 
     @Test
     void shouldUpdateBookNameById(){
-        repository.updateBookNameById(BOOK_ID_FIRST,BOOK_NAME_SECOND);
         Book book = em.find(Book.class, BOOK_ID_FIRST);
-        assertThat(book.getName()).isEqualTo(BOOK_NAME_SECOND);
+        book.setName(BOOK_NAME_SECOND);
+        repository.save(book);
+        Book book1 = em.find(Book.class, BOOK_ID_FIRST);
+        assertThat(book1.getName()).isEqualTo(BOOK_NAME_SECOND);
     }
     @Test
     void shouldDeleteBookById(){

@@ -13,7 +13,4 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findByComment(String comment);
-    @Modifying
-    @Query("UPDATE Comment c SET c.comment = :comment WHERE c.id = :id")
-    void updateCommentById(@Param("comment") String comment, @Param("id") Long id);
 }

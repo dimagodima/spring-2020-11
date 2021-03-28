@@ -13,7 +13,4 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByName(String name);
-    @Modifying
-    @Query("update Book b set b.name = :name where b.id = :id")
-    void updateBookNameById(@Param("id") Long id, @Param("name") String name);
 }

@@ -45,7 +45,8 @@ public class AuthorRepositoryTest {
 
     @Test
     void shouldUpdateAuthorById(){
-        repository.updateAuthorById(AUTHOR_NAME_SECOND,AUTHOR_ID_FIRST);
+        Author authorForFind = new Author(AUTHOR_ID_FIRST,AUTHOR_NAME_SECOND);
+        repository.save(em.find(Author.class, authorForFind));
         Author author = em.find(Author.class, AUTHOR_ID_FIRST);
         assertThat(author.getName()).isEqualTo(AUTHOR_NAME_SECOND);
     }
