@@ -8,22 +8,22 @@ import ru.otus.model.Book;
 import ru.otus.model.Genre;
 import ru.otus.repository.BookRepository;
 
-@ChangeLog
+@ChangeLog(order = "001")
 public class MongockChangeLog {
 
-    @ChangeSet(order = "001", id = "dropDb", runAlways = true, author = "me")
+    @ChangeSet(order = "000", id = "dropDb", runAlways = true, author = "me")
     public void dropDb(MongoDatabase db){
         db.drop();
     }
-    @ChangeSet(order = "002", id = "insertFirstBook", author = "me")
+    @ChangeSet(order = "001", id = "insertFirstBook", author = "me", runAlways = true)
     public void insertFirstBook(BookRepository repository){
-        repository.save(new Book("Одиссея",new Author("Гомер"),new Genre("Эпос")));
+        repository.save(new Book("1","Одиссея",new Author("Гомер"),new Genre("Эпос")));
     }
-    @ChangeSet(order = "003", id = "insertSecondBook", author = "me")
+    @ChangeSet(order = "002", id = "insertSecondBook", author = "me", runAlways = true)
     public void insertSecondBook(BookRepository repository){
         repository.save(new Book("Хеллсинг",new Author("Хирано Кота"), new Genre("Манга")));
     }
-    @ChangeSet(order = "003", id = "insertThirdBook", author = "me")
+    @ChangeSet(order = "003", id = "insertThirdBook", author = "me", runAlways = true)
     public void insertThirdBook(BookRepository repository){
         repository.save(new Book("Сияние",new Author("Стивен Кинг"), new Genre("Ужасы")));
     }
