@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get book</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+
+<table class="table table-active table-bordered w-75 p-3" border="1">
+    <tbody>
+    <tr class="table table-active border-dark">
+        <td class="text-black text-center"><span th:text="${book.id}">Идентификатор книги</span></td>
+        <td class="text-black text-center"><span th:text="${book.name}">Название книги</span></td>
+        <td class="text-black text-center"><span th:text="${book.genre.name}">Жанр</span></td>
+        <td class="text-black text-center"><span th:text="${book.author.name}">Автор</span></td>
+    </tr>
+    </tbody>
+</table>
+<a class="mb-2 btn btn-primary" href="/" role="button">Main page</a>
+
+
+</body>
+</html>
