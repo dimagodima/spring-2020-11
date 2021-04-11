@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Books</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<h1 class="text-black mx-auto" style="width: 75%;">Все книги :</h1>
+<div class="mx-auto" style="width: 75%;">
+    <table class="table table-active table-bordered w-75 p-3" border="1">
+        <thead>
+        <tr class="table table-active">
+            <th class="text-black text-center">Идентификатор книги</th>
+            <th class="text-black text-center">Название книги</th>
+            <th class="text-black text-center">Жанр</th>
+            <th class="text-black text-center">Автор</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table table-active" th:each="books : ${books}">
+            <td class="text-black text-center"><span th:text="${books.id}">Идентификатор книги</span></td>
+            <td class="text-black text-center"><span th:text="${books.name}">Название книги</span></td>
+            <td class="text-black text-center"><span th:text="${books.genre.name}">Жанр</span></td>
+            <td class="text-black text-center"><span th:text="${books.author.name}">Автор</span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="mb-2 btn btn-primary" href="/" role="button">На главную страницу</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete book</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+
+<form action="/delete_book">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Book id" aria-label="Book id" name="id" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="mb-2 btn btn-primary" type="submit">Send</button>
+        </div>
+    </div>
+</form>
+<a class="mb-2 btn btn-primary" href="/" role="button">Main page</a>
+
+</body>
+</html>
