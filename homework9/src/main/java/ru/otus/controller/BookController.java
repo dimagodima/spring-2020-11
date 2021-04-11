@@ -29,9 +29,9 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/get_book_form")
+    @GetMapping("/find_book_form")
     public String getBookForm(Model model){
-        return "get_book_form";
+        return "find_book_form";
     }
 
     @GetMapping("/get_book")

@@ -32,21 +32,8 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-//    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @BatchSize(size = 10)
-//    @JoinColumn(name = "comment_id")
-//    private List<Comment> comments;
-
     public Book() {
     }
-
-//    public Book(Long id, String name, Genre genre, Author author, List<Comment> comments) {
-//        this.id = id;
-//        this.name = name;
-//        this.genre = genre;
-//        this.author = author;
-//        this.comments = comments;
-//    }
 
     public Book(String name, Genre genre, Author author) {
         this.name = name;
@@ -85,14 +72,6 @@ public class Book {
     public void setAuthor(Author author) {
         this.author = author;
     }
-
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
 
     @Override
     public String toString() {
