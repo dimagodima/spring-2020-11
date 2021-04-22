@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get book</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<table class="table table-active table-bordered w-75 p-3" border="1">
+    <thead>
+    <tr>
+        <th>Идентификатор книги</th>
+        <th>Название книги</th>
+        <th>Жанр</th>
+        <th>Автор</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<a class="mb-2 btn btn-primary" href="/" role="button">Main page</a>
+<script>
+    $(function () {
+        $.get('/books').done(function (books) {
+            books.forEach(function (books) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${books.id}</td>
+                        <td>${books.name}</td>
+                        <td>${books.genre_id.name}</td>
+                        <td>${books.author_id.name}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
+</body>
+</html>
