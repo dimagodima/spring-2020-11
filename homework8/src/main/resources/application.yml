@@ -3,6 +3,6 @@ spring:
     mongodb:
       database: books
 mongock:
- runner-type: "InitializingBean"
+ runner-type: initializingbean
  change-logs-scan-package:
    - ru.otus.changelog
